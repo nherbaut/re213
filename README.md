@@ -1,10 +1,13 @@
-# maria's comments "
-# To check if your php has soap enabled 
-php -i | grep -i soap
-sudo apt-get install php-soap
+# FOREWORDS #
+You can choose whatever language to implement the web API. We advise you to use pure C, and we give you starter code for that.
 
+Other technologies available are: Go, Java EE, PHP, NodeJS, Ruby, Python....
 
-# DEPENDENCIES #
+We can help you with Java and Python, so for other languages you are on your own.
+
+# Coding a WEB API in C#
+
+## DEPENDENCIES ##
 
 * c build environment
 * gosap
@@ -16,7 +19,7 @@ sudo apt-get install php-soap
 sudo apt-get install build-essential gsoap libgsoap-dev cmake bison flex
 ```
 
-# COMPILATION #
+## COMPILATION ##
 
 just launch
 ```
@@ -25,9 +28,9 @@ just launch
 
 that will create makefiles for you in ./build and launch a build. Once created, You can just call make in the build directoty to perform a full build.
 
-# TEST #
+## TEST ##
 
-## REST ##
+### REST ###
 
 Binaries are generated in the ./build/rest directories.
 Open 2 terminals, and launch
@@ -54,6 +57,10 @@ iceweasel http://localhost:8888/countries/France
 ```
 
 
-# Using ECLIPSE or CLION#
+## Using ECLIPSE or CLION##
 
 You are advised to use an IDE such as ECLIPSE CDT or CLION, as it make the development and debugging easier
+
+
+
+
