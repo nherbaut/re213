@@ -66,7 +66,7 @@ typedef struct flight_availability {
     size_t count_seg;
 } flight_availability;
 
-
+/* Global structure for storing flights in the server side*/
 struct flight_segment listofFlights[MAX_FLIGHTS];
 
 
@@ -108,7 +108,7 @@ int loadFlightData(char * input) {
                 token = strtok(NULL,s);
 	      }
 	      else if(i==2) {
-		strcpy(listofFlights[k].arrival.code ,token);
+		strcpy(listofFlights[k].departure.code ,token);
 		token = strtok(NULL,s);
 	      }
 	      else if(i==3) {
@@ -127,7 +127,7 @@ int loadFlightData(char * input) {
                 token = strtok(NULL,s);
 	      }
 	      else if(i==6) {		  
-		strcpy(listofFlights[k].departure.code,token);
+		strcpy(listofFlights[k].arrival.code,token);
 		token = strtok(NULL,s);
 	      }
 	      else if(i==7) {
@@ -183,14 +183,17 @@ int loadFlightData(char * input) {
  * @param arrival iata code for arrival airport
  * @param date date of the departure. This function will look 3h after the specified date
  * @param availability provides at most 30 availability responses.
+ * @return 1 when the flight was found and 0 if not.
+
  */ 
 
-void findFlights(const char departure[3], const char arrival[3], const char date[5],
-                 flight_availability *availability) {
+//int findFlights(char departure[4],char arrival[4], char date[6],
+int findFlights(const char *departure,const char *arrival, const char *date, 
+                flight_availability *availability) {
   int k, i = 0;
   for(k=0;k<MAX_FLIGHTS;k++) {
-    if(!strcmp(listofFlights[k].arrival.code,departure)
-       && !strcmp(listofFlights[k].departure.code,arrival)
+    if(!strcmp(listofFlights[k].arrival.code,arrival)
+       && !strcmp(listofFlights[k].departure.code,departure)
        && !strcmp(listofFlights[k].date,date))
       {
 	strcpy(availability->seg[i].arrival.code,listofFlights[k].arrival.code );
@@ -218,6 +221,8 @@ void findFlights(const char departure[3], const char arrival[3], const char date
       }
   }
   availability->count_seg = i;
+   if(availability->count_seg != 0) return 1;
+ 	else return 0;
 };
 
 
@@ -226,29 +231,38 @@ void findFlights(const char departure[3], const char arrival[3], const char date
  * Price the flight in the system
  * @param code for the airline
  * @param flightNum the char containing the flight number
- * @param time the time of departure
+ * @param date the date of departure
  * @param klass the confort class of the flight
- * @return the prices of the flight 
+ * @param it use it as output to return the price
+ * @return 1 when price was found and 0 if not.
  */
-flight_price priceSegment(char *airline, int flightNumber, const time_t time_departure,const char * date, const char klass) {
+
+int priceSegment(const char *airline, int flightNumber,const char * date, const char klass, flight_price * price) {
    int k;
+   printf("%c", klass);
   for(k=0;k<MAX_FLIGHTS;k++) {
     if(!strcmp(listofFlights[k].flightId.airline,airline)
        && listofFlights[k].flightId.number==flightNumber	
-       && listofFlights[k].time_departure==time_departure
        && !strcmp(listofFlights[k].date,date))
-      {
-	switch (klass) {
-	case 'J':	
-	  return listofFlights[k].seats[0].price;
-	
-	case 'Y':	
-		return listofFlights[k].seats[1].price;
-	case 'M':	
-		return listofFlights[k].seats[2].price;
-	default :
-		printf("Invalid class type!\n");
-	
+      {	
+	if(klass=='J')  {
+	  price->net = listofFlights[k].seats[0].price.net;
+	  price->tax = listofFlights[k].seats[0].price.tax;	
+	  return 1;
+	}	
+	else if(klass=='Y'){
+	  price->net = listofFlights[k].seats[1].price.net;
+	  price->tax = listofFlights[k].seats[1].price.tax;
+	  return 1;
+	}	
+	else if(klass=='M'){	  
+	  price->net = listofFlights[k].seats[2].price.net;
+	  price->tax = listofFlights[k].seats[2].price.tax;
+	  return 1;
+	}
+	else {
+	  printf("Invalid class type!\n");
+	  return 0;
 	}
       }
   }
