@@ -3,7 +3,7 @@ You can choose whatever language to implement the web API. We advise you to use 
 
 Other technologies available are: Go, Java EE, PHP, NodeJS, Ruby, Python.... Please avoid Windows-only technologies such as C# and ASP.NET as we won't be able to use them on our computers.
 
-We can help you with Java and Python, so for other languages you are on your own. We need to be able to lauch your program to test it, so you have 2 options:
+We can help you with C, Java and Python, so for other languages you are on your own. We need to be able to lauch your program to test it, so you have 2 options:
 
 - deploy it on our own server and make it available online.
 - give us the procedure to execute your code.
