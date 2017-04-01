@@ -12,6 +12,7 @@ We can help you with C, Java and Python, so for other languages you are on your 
 
 ## DEPENDENCIES ##
 
+### Mandatory Dependencies ###
 * c build environment
 * gosap
 * cmake
@@ -20,6 +21,14 @@ We can help you with C, Java and Python, so for other languages you are on your 
 
 ```bash
 sudo apt-get install build-essential gsoap libgsoap-dev cmake bison flex
+```
+
+### Optional Dependencies ###
+
+You can generate the documentation for SOAP project by installing the DOXYGEN program
+
+```bash
+sudo apt-get install doxygen
 ```
 
 ## COMPILATION ##
@@ -33,7 +42,7 @@ that will create makefiles for you in ./build and launch a build. Once created, 
 
 ## TEST ##
 
-### REST ###
+### REST ###
 
 Binaries are generated in the ./build/rest directories.
 Open 2 terminals, and launch
