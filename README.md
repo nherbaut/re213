@@ -33,7 +33,14 @@ sudo apt-get install doxygen
 
 ## COMPILATION ##
 
-just launch
+First, you need to compile some core dependencies on your machine. In the c folder, launch
+
+```bash
+./bootstrap.sh
+```
+
+then, when everything is ready you can compile the project: just launch
+
 ```
 ./create_project_files.sh 
 ```
